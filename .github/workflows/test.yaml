@@ -21,4 +21,5 @@ jobs:
           echo 'sleep $wait_time" >> test.sh
           echo "done" >> test.sh
           chmod +x test.sh
+          pwd
           bash ./test.sh
