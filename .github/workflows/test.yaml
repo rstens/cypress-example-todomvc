@@ -10,4 +10,18 @@ jobs:
           chmod +x test.sh
           echo "#!/bin/bash" >> test.sh
           echo "url=https://api-biohubbc.apps.silver.devops.gov.bc.ca/version" >> test.sh
+          echo "code=200" >> test.sh
+          echo "wait_time=240000" >> test.sh
+          echo "max_attempts=3" >> test.sh
+          echo "attempt_counter: 0" >> test.sh
+          echo "until [ $(curl --output /dev/null --silent --head -X GET --retry 5 --fail --retry-delay 5 -w "%{response_code}\n" ${url}) -eq ${code} ]; do" >> test.sh
+          echo "if [ ${attempt_counter} -eq ${max_attempts} ];then" >> test.sh
+          echo "echo "Failed Connection"" >> test.sh
+          echo "exit 1" >> test.sh
+          echo "fi" >> test.sh
+          echo "printf '.'" >> test.sh
+          echo "attempt_counter=$(($attempt_counter+1))" >> test.sh
+          echo "sleep $wait_time" >> test.sh
+          echo "done" >> test.sh
+
           cat test.sh
