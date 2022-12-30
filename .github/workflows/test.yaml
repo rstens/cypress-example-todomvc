@@ -1,3 +1,16 @@
+name: e2e-complex
+on: workflow_dispatch
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for API response
+        uses: nev7n/wait_for_response@v1.0.1
+        with:
+          url: https://api-biohubbc.apps.silver.devops.gov.bc.ca/version
+          responseCode: 200
+          timeout: 240000
+          interval: 500
 
       - name: Wait for API response
         run: |
