@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Wait for API response
         run: |
+          touch test.sh
+          chmod +x test.sh
+          echo "#!/bin/bash" >> test.sh
           echo "url=https://api-biohubbc.apps.silver.devops.gov.bc.ca/version" >> test.sh
-          bash chmod +x test.sh
           cat test.sh
