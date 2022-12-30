@@ -14,11 +14,12 @@ jobs:
 
       - name: Wait for API response
         run: |
-          attempt_counter=0
-          max_attempts=3
-          code=200
-          wait_time=120
-          until [ $(curl --output /dev/null --silent --head -X GET --retry 5 --fail --retry-delay 5 -w "%{response_code}\n" https://api-biohubbc.apps.silver.devops.gov.bc.ca/version) -eq ${code} ]; do
+          bash url=https://api-biohubbc.apps.silver.devops.gov.bc.ca/version
+          > code=200
+          > wait_time=240000
+          > max_attempts=3
+          > attempt_counter: 0
+          > until [ $(curl --output /dev/null --silent --head -X GET --retry 5 --fail --retry-delay 5 -w "%{response_code}\n" ${url}) -eq ${code} ]; do
           >     if [ ${attempt_counter} -eq ${max_attempts} ];then
           >       echo "Failed Connection"
           >       exit 1
